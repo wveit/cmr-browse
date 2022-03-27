@@ -19,10 +19,7 @@ export function CollectionSearchResults({
               key={collection.id}
               collection={collection}
               selectedCollection={selectedCollection}
-              onClick={() => {
-                console.log(collection.short_name);
-                onCollectionSelect(collection);
-              }}
+              onClick={() => onCollectionSelect(collection)}
             />
           ))}
         </tbody>
