@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
+import { searchVariables } from "../service/cmr";
 
 export function Variables({ baseUrl, collection }) {
   const [variables, setVariables] = useState([]);
 
   useEffect(() => {
-    fetchVariablesData(baseUrl, collection.associations.variables || []).then(
-      (variables) => {
-        setVariables(variables);
-      }
-    );
+    const variableIdList = collection.associations.variables || [];
+    searchVariables({ baseUrl, variableIdList }).then((variables) => {
+      setVariables(variables);
+    });
   }, [collection, baseUrl]);
 
   return (
@@ -38,27 +38,4 @@ function Variable({ variable }) {
       `}</style>
     </li>
   );
-}
-
-async function fetchVariablesData(baseUrl, variableIdList) {
-  const variablesData = [];
-  const promises = [];
-  for (let id of variableIdList) {
-    const url = `${baseUrl}/search/variables.json?concept_id=${id}`;
-    promises.push(fetch(url));
-  }
-
-  for (let index in variableIdList) {
-    const promise = promises[index];
-    const id = variableIdList[index];
-
-    try {
-      const data = await promise.then((res) => res.json());
-      variablesData.push(data.items[0]);
-    } catch {
-      variablesData.push({ concept_id: id, status: "error" });
-    }
-  }
-
-  return variablesData;
 }

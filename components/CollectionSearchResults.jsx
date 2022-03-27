@@ -8,8 +8,10 @@ export function CollectionSearchResults({
       <h2>Collection Search Results:</h2>
       <table>
         <thead>
-          <th>Concept Id</th>
-          <th>Short Name</th>
+          <tr>
+            <th>Concept Id</th>
+            <th>Short Name</th>
+          </tr>
         </thead>
         <tbody>
           {collections.map((collection) => (

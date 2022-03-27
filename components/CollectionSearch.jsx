@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { searchCollections } from "../service/cmr";
 
 export function CollectionSearch({ baseUrl, onSearchResults }) {
   const shortNameRef = useRef();
@@ -7,7 +8,11 @@ export function CollectionSearch({ baseUrl, onSearchResults }) {
   async function handleSearchClick() {
     const shortName = shortNameRef.current.value;
     const toolName = toolNameRef.current.value;
-    const collections = await fetchCollections(baseUrl, shortName, toolName);
+    const collections = await searchCollections({
+      baseUrl,
+      shortName,
+      toolName,
+    });
     onSearchResults(collections);
   }
 
@@ -23,12 +28,4 @@ export function CollectionSearch({ baseUrl, onSearchResults }) {
       </div>
     </div>
   );
-}
-
-async function fetchCollections(baseUrl, shortName, toolName) {
-  const url = `${baseUrl}/search/collections.json?page_size=200`;
-  if (shortName) url += `&short_name=${shortName}`;
-  if (toolName) url += `&tool_name=${toolName}`;
-  const response = await fetch(url).then((res) => res.json());
-  return response.feed.entry;
 }
