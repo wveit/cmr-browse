@@ -5,7 +5,7 @@ export function Variables({ baseUrl, collection }) {
   const [variables, setVariables] = useState([]);
 
   useEffect(() => {
-    const variableIdList = collection.associations?.variables || [];
+    const variableIdList = collection?.associations?.variables || [];
     searchVariables({ baseUrl, variableIdList }).then((variables) => {
       setVariables(variables);
     });
