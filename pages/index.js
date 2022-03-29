@@ -14,12 +14,18 @@ export default function Index() {
     setSelectedCollection(collections[0]);
   }
 
+  function handleSetEnvironment(environment) {
+    setCollections([]);
+    setSelectedCollection(null);
+    setEnvironment(environment);
+  }
+
   return (
     <div>
       <h1>Search Collections</h1>
       <EnvironmentSelector
         environment={environment}
-        onSetEnvironment={setEnvironment}
+        onSetEnvironment={handleSetEnvironment}
       />
       <CollectionSearch
         baseUrl={cmrBaseUrl(environment)}

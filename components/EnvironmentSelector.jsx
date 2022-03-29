@@ -3,7 +3,7 @@ import { useEffect } from "react";
 export function EnvironmentSelector({ environment, onSetEnvironment }) {
   useEffect(() => {
     onSetEnvironment("ops");
-  }, [onSetEnvironment]);
+  }, []);
 
   function handleChange(event) {
     onSetEnvironment(event.target.value);
