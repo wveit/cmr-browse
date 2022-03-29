@@ -14,12 +14,16 @@ export async function searchCollections({
   return response.feed.entry;
 }
 
-export async function searchVariables({ baseUrl, variableIdList }) {
+export async function searchVariables({
+  baseUrl,
+  variableIdList,
+  format = "json",
+}) {
   const variablesData = [];
 
   const promises = [];
   for (let id of variableIdList) {
-    const url = `${baseUrl}/search/variables.json?concept_id=${id}`;
+    const url = `${baseUrl}/search/variables.${format}?concept_id=${id}`;
     promises.push(axios.get(url));
   }
 
