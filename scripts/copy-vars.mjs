@@ -1,5 +1,5 @@
 /**
- * Copy variables for a collection from once cmr to another (usually ops to uat)
+ * Copy variables for a collection from one cmr to another (usually ops to uat)
  *
  * Inputs (specified as variables in this file):
  * - `collectionShortName` (should be the same for both ops and uat)
