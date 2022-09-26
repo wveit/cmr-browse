@@ -23,11 +23,13 @@ import axios from "axios";
 //                      Input Variables
 //
 //========================================================
-const collectionShortName = "VIIRS_N20-OSPO-L2P-v2.61";
-const provider = "pocloud";
+const collectionShortName = "SWOT_SIMULATED_L2_KARIN_SSH_GLORYS_SCIENCE_V1";
 
 const sourceUrl = "https://cmr.earthdata.nasa.gov";
+const sourceProvider = "pocloud";
+
 const destUrl = "https://cmr.uat.earthdata.nasa.gov";
+const destProvider = "pocumulus";
 
 const config = JSON.parse(fs.readFileSync("./.env.json"));
 const destToken = config.token;
@@ -41,7 +43,7 @@ const destToken = config.token;
   const sourceCollection = await getOneCollection({
     baseUrl: sourceUrl,
     shortName: collectionShortName,
-    provider: provider,
+    provider: sourceProvider,
   });
 
   const sourceVariableData = await getVariableData({
@@ -52,7 +54,8 @@ const destToken = config.token;
   const destCollection = await getOneCollection({
     baseUrl: destUrl,
     shortName: collectionShortName,
-    provider: provider,
+    provider: destProvider,
+    token: destToken,
   });
 
   await writeAllVariableData({
@@ -63,14 +66,18 @@ const destToken = config.token;
   });
 })();
 
-async function getOneCollection({ baseUrl, shortName, provider }) {
+async function getOneCollection({ baseUrl, shortName, provider, token }) {
   const collections = await searchCollections({
     baseUrl,
     shortName,
     provider,
+    token,
   });
-  if (collections.length !== 1)
+  if (collections.length < 1) {
+    throw new Error("no collections returned");
+  } else if (collections.length > 1) {
     throw new Error("multiple collections returned");
+  }
   return collections[0];
 }
 
