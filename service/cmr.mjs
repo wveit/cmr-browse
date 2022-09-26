@@ -4,13 +4,15 @@ export async function searchCollections({
   baseUrl,
   shortName,
   toolName,
+  serviceName,
   provider,
-  token
+  token,
 }) {
-  let url = `${baseUrl}/search/collections.json?page_size=200`;
+  let url = `${baseUrl}/search/collections.json?page_size=200&options[short_name][pattern]=true`;
   let headers = {};
   if (shortName) url += `&short_name=${shortName}`;
   if (toolName) url += `&tool_name=${toolName}`;
+  if (serviceName) url += `&service_name=${serviceName}`;
   if (provider) url += `&provider=${provider}`;
   if (token) headers["Authorization"] = `Bearer ${token}`;
   const response = await axios.get(url, { headers }).then((res) => res.data);

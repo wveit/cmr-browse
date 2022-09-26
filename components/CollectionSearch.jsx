@@ -4,18 +4,24 @@ import { searchCollections } from "../service/cmr";
 export function CollectionSearch({ baseUrl, onSearchResults }) {
   const shortNameRef = useRef();
   const toolNameRef = useRef();
+  const serviceNameRef = useRef();
+  const providerRef = useRef();
   const tokenRef = useRef();
   const [error, setError] = useState("");
 
   async function handleSearchClick() {
     const shortName = shortNameRef.current.value;
     const toolName = toolNameRef.current.value;
+    const serviceName = serviceNameRef.current.value;
+    const provider = providerRef.current.value;
     const token = tokenRef.current.value;
     try {
       const collections = await searchCollections({
         baseUrl,
         shortName,
         toolName,
+        serviceName,
+        provider,
         token: token || undefined,
       });
       setError("");
@@ -34,6 +40,10 @@ export function CollectionSearch({ baseUrl, onSearchResults }) {
         short name: <input ref={shortNameRef} />
         <br />
         tool name: <input ref={toolNameRef} />
+        <br />
+        service name: <input ref={serviceNameRef} />
+        <br />
+        provider: <input ref={providerRef} />
         <br />
         token (optional): <input ref={tokenRef} />
         <button onClick={handleSearchClick}>Search</button>
