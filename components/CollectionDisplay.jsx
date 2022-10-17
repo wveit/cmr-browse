@@ -2,6 +2,7 @@ import { Tabs } from "./Tabs";
 import { CollectionDetails } from "./CollectionDetails";
 import { VariablesUmm } from "./VariablesUmm";
 import { Variables } from "./Variables";
+import { Granules } from "./Granules";
 
 export function CollectionDisplay({ baseUrl, collection }) {
   return (
@@ -11,7 +12,7 @@ export function CollectionDisplay({ baseUrl, collection }) {
         <CollectionDetails collection={collection} />
         <Variables baseUrl={baseUrl} collection={collection} />
         <VariablesUmm baseUrl={baseUrl} collection={collection} />
-        <div>Granules Search... coming soon</div>
+        <Granules baseUrl={baseUrl} collection={collection} />
       </Tabs>
     </div>
   );

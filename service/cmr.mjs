@@ -46,3 +46,15 @@ export async function searchVariables({
 
   return variablesData;
 }
+
+export async function searchGranules({ baseUrl, collectionId }) {
+  const url = `${baseUrl}/search/granules.json?page_size=10`;
+  if (collectionId) url += `&collection_concept_id=${collectionId}`;
+  const response = await fetch(url);
+  const json = await response.json();
+
+  const granules = json.feed.entry;
+  const hits = Number.parseInt(response.headers.get("cmr-hits"));
+
+  return { granules, hits };
+}
