@@ -11,6 +11,8 @@ export function CollectionSearchResults({
           <tr>
             <th>Concept Id</th>
             <th>Short Name</th>
+            <th>Start Time</th>
+            <th>Stop Time</th>
           </tr>
         </thead>
         <tbody>
@@ -44,6 +46,8 @@ function CollectionRow({ collection, selectedCollection, onClick }) {
     <tr className={classes} onClick={onClick}>
       <td>{collection.id}</td>
       <td>{collection.short_name}</td>
+      <td>{collection.time_start || "--"}</td>
+      <td>{collection.time_stop || "--"}</td>
     </tr>
   );
 }
