@@ -6,6 +6,7 @@ export function Granules({ baseUrl, collection, token }) {
   const [granules, setGranules] = useState([]);
 
   useEffect(() => {
+    if (!collection) return;
     searchGranules({ baseUrl, collectionId: collection.id, token }).then(
       (res) => {
         setHits(res.hits);
