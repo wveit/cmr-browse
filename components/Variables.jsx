@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
 import { searchVariables } from "../service/cmr";
 
-export function Variables({ baseUrl, collection }) {
+export function Variables({ baseUrl, collection, token }) {
   const [variables, setVariables] = useState([]);
 
   useEffect(() => {
     const variableIdList = collection?.associations?.variables || [];
-    searchVariables({ baseUrl, variableIdList }).then((variables) => {
+    searchVariables({ baseUrl, variableIdList, token }).then((variables) => {
       setVariables(variables);
     });
-  }, [collection, baseUrl]);
+  }, [collection, baseUrl, token]);
 
   return (
     <ol>

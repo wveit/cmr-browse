@@ -1,6 +1,11 @@
 import { useEffect } from "react";
 
-export function EnvironmentSelector({ environment, onSetEnvironment }) {
+export function EnvironmentSelector({
+  environment,
+  onSetEnvironment,
+  token,
+  onSetToken,
+}) {
   useEffect(() => {
     onSetEnvironment("ops");
   }, []);
@@ -18,6 +23,11 @@ export function EnvironmentSelector({ environment, onSetEnvironment }) {
           <option value="uat">uat</option>
           <option value="sit">sit</option>
         </select>
+      </label>
+      <br />
+      <label>
+        Token{" "}
+        <input value={token} onChange={(evt) => onSetToken(evt.target.value)} />
       </label>
 
       <style jsx>{`

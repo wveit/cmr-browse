@@ -3,11 +3,18 @@ import { EnvironmentSelector } from "../components/EnvironmentSelector";
 import { CollectionSearch } from "../components/CollectionSearch";
 import { CollectionSearchResults } from "../components/CollectionSearchResults";
 import { CollectionDisplay } from "../components/CollectionDisplay";
+import { Tabs } from "../components/Tabs";
+import { CollectionDetails } from "../components/CollectionDetails";
+import { Variables } from "../components/Variables";
+import { VariablesUmm } from "../components/VariablesUmm";
+import { Granules } from "../components/Granules";
 
 export default function Index() {
   const [environment, setEnvironment] = useState("");
+  const [edlToken, setEdlToken] = useState("");
   const [collections, setCollections] = useState([]);
   const [selectedCollection, setSelectedCollection] = useState(null);
+  const baseUrl = cmrBaseUrl(environment);
 
   function handleCollectionSearchResults(collections) {
     setCollections(collections);
@@ -22,24 +29,43 @@ export default function Index() {
 
   return (
     <div>
-      <h1>Search Collections</h1>
+      <h1>CMR Browse</h1>
       <EnvironmentSelector
         environment={environment}
         onSetEnvironment={handleSetEnvironment}
+        token={edlToken}
+        onSetToken={setEdlToken}
       />
+      <h3>Search Collections</h3>
       <CollectionSearch
-        baseUrl={cmrBaseUrl(environment)}
+        baseUrl={baseUrl}
         onSearchResults={handleCollectionSearchResults}
+        token={edlToken}
       />
       <CollectionSearchResults
         collections={collections}
         selectedCollection={selectedCollection}
         onCollectionSelect={setSelectedCollection}
       />
-      <CollectionDisplay
-        collection={selectedCollection}
-        baseUrl={cmrBaseUrl(environment)}
-      />
+      <h3>Collection Details</h3>
+      <Tabs tabs={["details", "variables", "variables_umm", "granules"]}>
+        <CollectionDetails collection={selectedCollection} />
+        <Variables
+          baseUrl={baseUrl}
+          collection={selectedCollection}
+          token={edlToken}
+        />
+        <VariablesUmm
+          baseUrl={baseUrl}
+          collection={selectedCollection}
+          token={edlToken}
+        />
+        <Granules
+          baseUrl={baseUrl}
+          collection={selectedCollection}
+          token={edlToken}
+        />
+      </Tabs>
     </div>
   );
 }

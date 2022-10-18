@@ -22,6 +22,7 @@ export async function searchCollections({
 export async function searchVariables({
   baseUrl,
   variableIdList,
+  token = null,
   format = "json",
 }) {
   const variablesData = [];
@@ -29,7 +30,9 @@ export async function searchVariables({
   const promises = [];
   for (let id of variableIdList) {
     const url = `${baseUrl}/search/variables.${format}?concept_id=${id}`;
-    promises.push(axios.get(url));
+    const headers = {};
+    if (token) headers["Authorization"] = `Bearer ${token}`;
+    promises.push(axios({ method: "get", url, headers }));
   }
 
   for (let index in variableIdList) {
@@ -47,10 +50,12 @@ export async function searchVariables({
   return variablesData;
 }
 
-export async function searchGranules({ baseUrl, collectionId }) {
+export async function searchGranules({ baseUrl, collectionId, token }) {
   const url = `${baseUrl}/search/granules.json?page_size=10`;
   if (collectionId) url += `&collection_concept_id=${collectionId}`;
-  const response = await fetch(url);
+  const headers = {};
+  if (token) headers["Authorization"] = `Bearer ${token}`;
+  const response = await fetch(url, { headers });
   const json = await response.json();
 
   const granules = json.feed.entry;

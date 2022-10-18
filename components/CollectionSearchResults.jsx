@@ -5,7 +5,6 @@ export function CollectionSearchResults({
 }) {
   return (
     <div>
-      <h2>Collection Search Results:</h2>
       <table>
         <thead>
           <tr>
@@ -30,6 +29,16 @@ export function CollectionSearchResults({
       <style jsx>{`
         table :global(.selected) {
           background-color: lightblue;
+        }
+
+        table {
+          border-collapse: collapse;
+          border: 1px solid blue;
+          max-height: 200px;
+          overflow-y: scroll;
+        }
+        thead {
+          background: rgb(222, 239, 240);
         }
       `}</style>
     </div>

@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 import { searchGranules } from "../service/cmr.mjs";
 
-export function Granules({ baseUrl, collection }) {
+export function Granules({ baseUrl, collection, token }) {
   const [hits, setHits] = useState(0);
   const [granules, setGranules] = useState([]);
 
   useEffect(() => {
-    searchGranules({ baseUrl, collectionId: collection.id }).then((res) => {
-      setHits(res.hits);
-      setGranules(res.granules);
-    });
-  }, [baseUrl, collection]);
+    searchGranules({ baseUrl, collectionId: collection.id, token }).then(
+      (res) => {
+        setHits(res.hits);
+        setGranules(res.granules);
+      }
+    );
+  }, [baseUrl, collection, token]);
 
   return (
     <div>

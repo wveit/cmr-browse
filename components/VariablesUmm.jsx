@@ -1,17 +1,20 @@
 import { useState, useEffect } from "react";
 import { searchVariables } from "../service/cmr";
 
-export function VariablesUmm({ baseUrl, collection }) {
+export function VariablesUmm({ baseUrl, collection, token }) {
   const [variables, setVariables] = useState([]);
 
   useEffect(() => {
     const variableIdList = collection?.associations?.variables || [];
-    searchVariables({ baseUrl, variableIdList, format: "umm_json" }).then(
-      (variables) => {
-        setVariables(variables);
-      }
-    );
-  }, [collection, baseUrl]);
+    searchVariables({
+      baseUrl,
+      variableIdList,
+      token,
+      format: "umm_json",
+    }).then((variables) => {
+      setVariables(variables);
+    });
+  }, [collection, baseUrl, token]);
 
   return (
     <ol>

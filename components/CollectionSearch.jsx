@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { searchCollections } from "../service/cmr";
 
-export function CollectionSearch({ baseUrl, onSearchResults }) {
+export function CollectionSearch({ baseUrl, onSearchResults, token }) {
   const shortNameRef = useRef();
   const toolNameRef = useRef();
   const serviceNameRef = useRef();
@@ -14,7 +14,6 @@ export function CollectionSearch({ baseUrl, onSearchResults }) {
     const toolName = toolNameRef.current.value;
     const serviceName = serviceNameRef.current.value;
     const provider = providerRef.current.value;
-    const token = tokenRef.current.value;
     try {
       const collections = await searchCollections({
         baseUrl,
@@ -35,7 +34,6 @@ export function CollectionSearch({ baseUrl, onSearchResults }) {
 
   return (
     <div>
-      <h2>Collection Search:</h2>{" "}
       <div>
         short name: <input ref={shortNameRef} />
         <br />
@@ -45,7 +43,6 @@ export function CollectionSearch({ baseUrl, onSearchResults }) {
         <br />
         provider: <input ref={providerRef} />
         <br />
-        token (optional): <input ref={tokenRef} />
         <button onClick={handleSearchClick}>Search</button>
       </div>
       {error ? <div className="error">{error}</div> : null}
