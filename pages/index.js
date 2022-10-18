@@ -2,7 +2,6 @@ import { useState } from "react";
 import { EnvironmentSelector } from "../components/EnvironmentSelector";
 import { CollectionSearch } from "../components/CollectionSearch";
 import { CollectionSearchResults } from "../components/CollectionSearchResults";
-import { CollectionDisplay } from "../components/CollectionDisplay";
 import { Tabs } from "../components/Tabs";
 import { CollectionDetails } from "../components/CollectionDetails";
 import { Variables } from "../components/Variables";
