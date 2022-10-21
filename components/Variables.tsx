@@ -24,9 +24,7 @@ function Variable({ variable }) {
   return (
     <li>
       {Object.entries(variable).map(([key, value]) => (
-        <div key={key}>
-          {key}: {value}
-        </div>
+        <div key={key}>{`${key}: ${value}`}</div>
       ))}
       <style jsx>{`
         li {
