@@ -8,7 +8,7 @@ export async function searchCollections({
   provider,
   token,
 }) {
-  let url = `${baseUrl}/search/collections.json?page_size=200&options[short_name][pattern]=true`;
+  let url = `${baseUrl}/search/collections.json?page_size=200&include_granule_counts=true&options[short_name][pattern]=true`;
   let headers = {};
   if (shortName) url += `&short_name=${shortName}`;
   if (toolName) url += `&tool_name=${toolName}`;
@@ -51,7 +51,7 @@ export async function searchVariables({
 }
 
 export async function searchGranules({ baseUrl, collectionId, token }) {
-  const url = `${baseUrl}/search/granules.json?page_size=10`;
+  let url = `${baseUrl}/search/granules.json?page_size=10`;
   if (collectionId) url += `&collection_concept_id=${collectionId}`;
   const headers = {};
   if (token) headers["Authorization"] = `Bearer ${token}`;
