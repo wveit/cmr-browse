@@ -1,5 +1,13 @@
 import axios from "axios";
 
+interface CollectionSearchParams {
+  baseUrl: string;
+  shortName?: string;
+  toolName?: string;
+  serviceName?: string;
+  provider?: string;
+  token?: string;
+}
 export async function searchCollections({
   baseUrl,
   shortName,
@@ -7,7 +15,7 @@ export async function searchCollections({
   serviceName,
   provider,
   token,
-}) {
+}: CollectionSearchParams) {
   let url = `${baseUrl}/search/collections.json?page_size=200&include_granule_counts=true&options[short_name][pattern]=true`;
   let headers = {};
   if (shortName) url += `&short_name=${shortName}`;
@@ -19,12 +27,18 @@ export async function searchCollections({
   return response.feed.entry;
 }
 
+interface VariableSearchParams {
+  baseUrl: string;
+  variableIdList: string[];
+  token?: string;
+  format?: "json" | "umm_json";
+}
 export async function searchVariables({
   baseUrl,
   variableIdList,
-  token = null,
+  token,
   format = "json",
-}) {
+}: VariableSearchParams) {
   const variablesData = [];
 
   const promises = [];

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { searchGranules } from "../service/cmr.mjs";
+import { searchGranules } from "../service/cmr";
 
 export function Granules({ baseUrl, collection, token }) {
   const [hits, setHits] = useState(0);

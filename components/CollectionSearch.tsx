@@ -2,18 +2,13 @@ import { useRef, useState } from "react";
 import { searchCollections } from "../service/cmr";
 
 export function CollectionSearch({ baseUrl, onSearchResults, token }) {
-  const shortNameRef = useRef();
-  const toolNameRef = useRef();
-  const serviceNameRef = useRef();
-  const providerRef = useRef();
-  const tokenRef = useRef();
+  const [shortName, setShortName] = useState("");
+  const [toolName, setToolName] = useState("");
+  const [serviceName, setServiceName] = useState("");
+  const [provider, setProvider] = useState("");
   const [error, setError] = useState("");
 
   async function handleSearchClick() {
-    const shortName = shortNameRef.current.value;
-    const toolName = toolNameRef.current.value;
-    const serviceName = serviceNameRef.current.value;
-    const provider = providerRef.current.value;
     try {
       const collections = await searchCollections({
         baseUrl,
@@ -35,13 +30,23 @@ export function CollectionSearch({ baseUrl, onSearchResults, token }) {
   return (
     <div>
       <div>
-        short name: <input ref={shortNameRef} />
+        short name:{" "}
+        <input
+          value={shortName}
+          onChange={(e) => setShortName(e.target.value)}
+        />
         <br />
-        tool name: <input ref={toolNameRef} />
+        tool name:{" "}
+        <input value={toolName} onChange={(e) => setToolName(e.target.value)} />
         <br />
-        service name: <input ref={serviceNameRef} />
+        service name:{" "}
+        <input
+          value={serviceName}
+          onChange={(e) => setServiceName(e.target.value)}
+        />
         <br />
-        provider: <input ref={providerRef} />
+        provider:{" "}
+        <input value={provider} onChange={(e) => setProvider(e.target.value)} />
         <br />
         <button onClick={handleSearchClick}>Search</button>
       </div>

@@ -7,6 +7,7 @@ import { CollectionDetails } from "../components/CollectionDetails";
 import { Variables } from "../components/Variables";
 import { VariablesUmm } from "../components/VariablesUmm";
 import { Granules } from "../components/Granules";
+import { LoginControl } from "../components/LoginControl";
 
 export default function Index() {
   const [environment, setEnvironment] = useState("");
@@ -35,6 +36,7 @@ export default function Index() {
         token={edlToken}
         onSetToken={setEdlToken}
       />
+      <LoginControl environment={environment} />
       <h3>Search Collections</h3>
       <CollectionSearch
         baseUrl={baseUrl}

@@ -15,7 +15,7 @@
  *   collection in the source cmr.
  */
 import * as fs from "fs";
-import { searchCollections, searchVariables } from "../service/cmr.mjs";
+import { searchCollections, searchVariables } from "../service/cmr";
 import axios from "axios";
 
 //========================================================
@@ -31,7 +31,8 @@ const sourceProvider = "pocloud";
 const destUrl = "https://cmr.uat.earthdata.nasa.gov";
 const destProvider = "pocumulus";
 
-const config = JSON.parse(fs.readFileSync("./.env.json"));
+const configText = fs.readFileSync("./.env.json").toString();
+const config = JSON.parse(configText);
 const destToken = config.token;
 
 //========================================================
@@ -66,7 +67,12 @@ const destToken = config.token;
   });
 })();
 
-async function getOneCollection({ baseUrl, shortName, provider, token }) {
+async function getOneCollection({
+  baseUrl,
+  shortName,
+  provider,
+  token = null,
+}) {
   const collections = await searchCollections({
     baseUrl,
     shortName,
