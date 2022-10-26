@@ -14,6 +14,7 @@ export default function Index() {
   const [environment, setEnvironment] = useState<Environment>("ops");
   const [edlToken, setEdlToken] = useState("");
   const [collections, setCollections] = useState<Collection[]>([]);
+  const [collectionHits, setCollectionHits] = useState<number>(6);
   const [selectedCollection, setSelectedCollection] =
     useState<Collection | null>(null);
   const baseUrl = cmrBaseUrl(environment);
@@ -46,6 +47,7 @@ export default function Index() {
       />
       <CollectionSearchResults
         collections={collections}
+        hits={collectionHits}
         selectedCollection={selectedCollection}
         onCollectionSelect={setSelectedCollection}
       />
@@ -68,6 +70,8 @@ export default function Index() {
           token={edlToken}
         />
       </Tabs>
+
+      <style jsx>{``}</style>
     </div>
   );
 }
