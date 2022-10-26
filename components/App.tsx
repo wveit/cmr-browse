@@ -61,7 +61,12 @@ export function App({ environment }: { environment: Environment }) {
         />
       </Tabs>
 
-      <style jsx>{``}</style>
+      <style jsx>{`
+        header {
+          display: flex;
+          align-items: center;
+        }
+      `}</style>
     </div>
   );
 }
