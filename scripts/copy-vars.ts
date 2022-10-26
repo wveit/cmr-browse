@@ -17,6 +17,7 @@
 import * as fs from "fs";
 import { searchCollections, searchVariables } from "../service/cmr";
 import axios from "axios";
+import { Collection } from "../types/Collection";
 
 //========================================================
 //
@@ -71,7 +72,12 @@ async function getOneCollection({
   baseUrl,
   shortName,
   provider,
-  token = null,
+  token,
+}: {
+  baseUrl: string;
+  shortName: string;
+  provider: string;
+  token?: string;
 }) {
   const collections = await searchCollections({
     baseUrl,
@@ -87,7 +93,13 @@ async function getOneCollection({
   return collections[0];
 }
 
-async function getVariableData({ baseUrl, collection }) {
+async function getVariableData({
+  baseUrl,
+  collection,
+}: {
+  baseUrl: string;
+  collection: Collection;
+}) {
   const variableIdList = collection.associations?.variables;
   if (!variableIdList) throw new Error("source had not variable associations");
 
@@ -104,9 +116,14 @@ async function writeAllVariableData({
   token,
   collectionConceptId,
   variableData,
+}: {
+  baseUrl: string;
+  token: string;
+  collectionConceptId: string;
+  variableData: any;
 }) {
   console.log("writing variable data");
-  variableData.forEach((variable) =>
+  variableData.forEach((variable: any) =>
     writeOneVariableData({ baseUrl, token, collectionConceptId, variable })
   );
 }
@@ -116,6 +133,11 @@ async function writeOneVariableData({
   token,
   collectionConceptId,
   variable,
+}: {
+  baseUrl: string;
+  token: string;
+  collectionConceptId: string;
+  variable: any;
 }) {
   const nativeId = variable.meta["native-id"];
   let url = `${baseUrl}/ingest/collections/${collectionConceptId}/variables/${nativeId}`;
@@ -130,7 +152,7 @@ async function writeOneVariableData({
       },
       data: variable.umm,
     });
-  } catch (error) {
+  } catch (error: any) {
     console.error(error.response);
   }
 }

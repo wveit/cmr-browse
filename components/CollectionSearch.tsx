@@ -1,7 +1,18 @@
+import axios, { AxiosError } from "axios";
 import { useRef, useState } from "react";
 import { searchCollections } from "../service/cmr";
+import type { Collection } from "../types/Collection";
 
-export function CollectionSearch({ baseUrl, onSearchResults, token }) {
+interface CollectionSearchProps {
+  baseUrl: string;
+  onSearchResults: (collections: Collection[]) => void;
+  token: string;
+}
+export function CollectionSearch({
+  baseUrl,
+  onSearchResults,
+  token,
+}: CollectionSearchProps) {
   const [shortName, setShortName] = useState("");
   const [toolName, setToolName] = useState("");
   const [serviceName, setServiceName] = useState("");
@@ -21,9 +32,15 @@ export function CollectionSearch({ baseUrl, onSearchResults, token }) {
       setError("");
       onSearchResults(collections);
     } catch (error) {
-      console.log("Error", error.response);
-      const response = error.response;
-      setError(`Error: ${response.status} - ${response.data.errors[0]}`);
+      if (axios.isAxiosError(error)) {
+        console.log("Error", error.response);
+        const response = error.response;
+        if (response) {
+          setError(`Error: ${response.status} - ${response.data.errors[0]}`);
+        } else {
+          setError("Unknown Error");
+        }
+      }
     }
   }
 

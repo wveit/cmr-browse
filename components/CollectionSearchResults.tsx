@@ -1,8 +1,15 @@
+import { Collection } from "../types/Collection";
+
+interface Props {
+  collections: Collection[];
+  selectedCollection: Collection | null;
+  onCollectionSelect: (collection: Collection) => void;
+}
 export function CollectionSearchResults({
   collections,
   selectedCollection,
   onCollectionSelect,
-}) {
+}: Props) {
   return (
     <div>
       <table>
@@ -45,7 +52,15 @@ export function CollectionSearchResults({
   );
 }
 
-function CollectionRow({ collection, selectedCollection, onClick }) {
+function CollectionRow({
+  collection,
+  selectedCollection,
+  onClick,
+}: {
+  collection: Collection;
+  selectedCollection: Collection | null;
+  onClick: () => void;
+}) {
   let classes = "";
   if (selectedCollection && collection.id === selectedCollection.id) {
     classes = "selected";
@@ -56,7 +71,7 @@ function CollectionRow({ collection, selectedCollection, onClick }) {
       <td>{collection.id}</td>
       <td>{collection.short_name}</td>
       <td>{collection.time_start || "--"}</td>
-      <td>{collection.time_stop || "--"}</td>
+      <td>{collection.time_end || "--"}</td>
     </tr>
   );
 }

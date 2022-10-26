@@ -1,6 +1,12 @@
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 
-export function Tabs({ tabs, children }) {
+export function Tabs({
+  tabs,
+  children,
+}: {
+  tabs: string[];
+  children: ReactNode;
+}) {
   const [selectedTab, setSelectedTab] = useState(tabs[0]);
   const selectedTabIndex = tabs.indexOf(selectedTab);
 
@@ -16,7 +22,15 @@ export function Tabs({ tabs, children }) {
   );
 }
 
-function TabBar({ tabs, selectedTab, onTabSelect }) {
+function TabBar({
+  tabs,
+  selectedTab,
+  onTabSelect,
+}: {
+  tabs: string[];
+  selectedTab: string;
+  onTabSelect: (tab: string) => void;
+}) {
   return (
     <div className="TabBar">
       {tabs.map((tab) => (
@@ -49,9 +63,12 @@ function TabBar({ tabs, selectedTab, onTabSelect }) {
   );
 }
 
-function TabContent({ children, selectedTabIndex }) {
-  if (isNaN(selectedTabIndex)) {
-    return null;
-  }
+function TabContent({
+  children,
+  selectedTabIndex,
+}: {
+  children: any;
+  selectedTabIndex: number;
+}) {
   return children[selectedTabIndex];
 }

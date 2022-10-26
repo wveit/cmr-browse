@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Collection } from "../types/Collection";
 
 interface CollectionSearchParams {
   baseUrl: string;
@@ -15,9 +16,9 @@ export async function searchCollections({
   serviceName,
   provider,
   token,
-}: CollectionSearchParams) {
+}: CollectionSearchParams): Promise<Collection[]> {
   let url = `${baseUrl}/search/collections.json?page_size=200&include_granule_counts=true&options[short_name][pattern]=true`;
-  let headers = {};
+  let headers: Record<string, string> = {};
   if (shortName) url += `&short_name=${shortName}`;
   if (toolName) url += `&tool_name=${toolName}`;
   if (serviceName) url += `&service_name=${serviceName}`;
@@ -44,7 +45,7 @@ export async function searchVariables({
   const promises = [];
   for (let id of variableIdList) {
     const url = `${baseUrl}/search/variables.${format}?concept_id=${id}`;
-    const headers = {};
+    const headers: Record<string, string> = {};
     if (token) headers["Authorization"] = `Bearer ${token}`;
     promises.push(axios({ method: "get", url, headers }));
   }
@@ -64,16 +65,24 @@ export async function searchVariables({
   return variablesData;
 }
 
-export async function searchGranules({ baseUrl, collectionId, token }) {
+export async function searchGranules({
+  baseUrl,
+  collectionId,
+  token,
+}: {
+  baseUrl: string;
+  collectionId: string;
+  token: string;
+}) {
   let url = `${baseUrl}/search/granules.json?page_size=10`;
   if (collectionId) url += `&collection_concept_id=${collectionId}`;
-  const headers = {};
+  const headers: Record<string, string> = {};
   if (token) headers["Authorization"] = `Bearer ${token}`;
   const response = await fetch(url, { headers });
   const json = await response.json();
 
   const granules = json.feed.entry;
-  const hits = Number.parseInt(response.headers.get("cmr-hits"));
+  const hits = Number.parseInt(response.headers.get("cmr-hits") || "");
 
   return { granules, hits };
 }

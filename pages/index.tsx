@@ -7,21 +7,23 @@ import { CollectionDetails } from "../components/CollectionDetails";
 import { Variables } from "../components/Variables";
 import { VariablesUmm } from "../components/VariablesUmm";
 import { Granules } from "../components/Granules";
-import { LoginControl } from "../components/LoginControl";
+import { Environment } from "../types";
+import { Collection } from "../types/Collection";
 
 export default function Index() {
-  const [environment, setEnvironment] = useState("");
+  const [environment, setEnvironment] = useState<Environment>("ops");
   const [edlToken, setEdlToken] = useState("");
-  const [collections, setCollections] = useState([]);
-  const [selectedCollection, setSelectedCollection] = useState(null);
+  const [collections, setCollections] = useState<Collection[]>([]);
+  const [selectedCollection, setSelectedCollection] =
+    useState<Collection | null>(null);
   const baseUrl = cmrBaseUrl(environment);
 
-  function handleCollectionSearchResults(collections) {
+  function handleCollectionSearchResults(collections: Collection[]) {
     setCollections(collections);
     setSelectedCollection(collections[0]);
   }
 
-  function handleSetEnvironment(environment) {
+  function handleSetEnvironment(environment: Environment) {
     setCollections([]);
     setSelectedCollection(null);
     setEnvironment(environment);
@@ -36,7 +38,6 @@ export default function Index() {
         token={edlToken}
         onSetToken={setEdlToken}
       />
-      <LoginControl environment={environment} />
       <h3>Search Collections</h3>
       <CollectionSearch
         baseUrl={baseUrl}
@@ -71,7 +72,7 @@ export default function Index() {
   );
 }
 
-function cmrBaseUrl(environment) {
+function cmrBaseUrl(environment: Environment) {
   let envString = environment + ".";
   if (environment === "ops") {
     envString = "";

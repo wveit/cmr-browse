@@ -1,8 +1,18 @@
 import { useState, useEffect } from "react";
 import { searchVariables } from "../service/cmr";
+import { Collection } from "../types/Collection";
+import { VariableUmmJson } from "../types/Variable";
 
-export function VariablesUmm({ baseUrl, collection, token }) {
-  const [variables, setVariables] = useState([]);
+export function VariablesUmm({
+  baseUrl,
+  collection,
+  token,
+}: {
+  baseUrl: string;
+  collection: Collection | null;
+  token: string;
+}) {
+  const [variables, setVariables] = useState<VariableUmmJson[]>([]);
 
   useEffect(() => {
     const variableIdList = collection?.associations?.variables || [];
@@ -19,13 +29,13 @@ export function VariablesUmm({ baseUrl, collection, token }) {
   return (
     <ol>
       {variables.map((variable) => (
-        <Variable key={variable.concept_id} variable={variable} />
+        <Variable key={variable.meta["concept-id"]} variable={variable} />
       ))}
     </ol>
   );
 }
 
-function Variable({ variable }) {
+function Variable({ variable }: { variable: VariableUmmJson }) {
   return (
     <div>
       <pre>{JSON.stringify(variable, null, 2)}</pre>

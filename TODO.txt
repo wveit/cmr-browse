@@ -1,0 +1,5 @@
+TODO:
+- Login/logout button, that lets you enter token for the selected environment (saved in localstorage)
+- Group together (and make attractive) header content - header, environment, login button
+
+FINISHED:

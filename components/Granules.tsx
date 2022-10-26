@@ -1,9 +1,19 @@
 import { useEffect, useState } from "react";
 import { searchGranules } from "../service/cmr";
+import { Collection } from "../types/Collection";
+import { GranuleJson } from "../types/GranuleJson";
 
-export function Granules({ baseUrl, collection, token }) {
+export function Granules({
+  baseUrl,
+  collection,
+  token,
+}: {
+  baseUrl: string;
+  collection: Collection | null;
+  token: string;
+}) {
   const [hits, setHits] = useState(0);
-  const [granules, setGranules] = useState([]);
+  const [granules, setGranules] = useState<GranuleJson[]>([]);
 
   useEffect(() => {
     if (!collection) return;
@@ -35,7 +45,7 @@ export function Granules({ baseUrl, collection, token }) {
   );
 }
 
-function Granule({ granule }) {
+function Granule({ granule }: { granule: GranuleJson }) {
   const [showDetails, setShowDetails] = useState(false);
   const detailsString = showDetails ? "hide details" : "show details";
   const detailsClassName = "Granule__details" + (showDetails ? "" : " hidden");
@@ -46,7 +56,7 @@ function Granule({ granule }) {
     <div className="Granule">
       <div>{granule.title}</div>
       <div>
-        {granule.time_start || "---"} to {granule.time_end || "---"}
+        {`${granule.time_start || "---"} to ${granule.time_end || "---"}`}
       </div>
       <div className="control-bar">
         <span
@@ -93,7 +103,7 @@ function Granule({ granule }) {
   );
 }
 
-function findDownloadUrl(granule) {
+function findDownloadUrl(granule: GranuleJson) {
   try {
     for (let link of granule.links) {
       if (

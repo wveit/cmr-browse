@@ -1,17 +1,25 @@
-import { useEffect } from "react";
+import { ChangeEvent, useEffect } from "react";
+import { Environment } from "../types";
 
 export function EnvironmentSelector({
   environment,
   onSetEnvironment,
   token,
   onSetToken,
+}: {
+  environment: Environment;
+  onSetEnvironment: (env: Environment) => void;
+  token: string;
+  onSetToken: (token: string) => void;
 }) {
   useEffect(() => {
     onSetEnvironment("ops");
   }, []);
 
-  function handleChange(event) {
-    onSetEnvironment(event.target.value);
+  function handleChange(event: ChangeEvent<HTMLSelectElement>) {
+    const value = event.target.value;
+    if (value === "ops" || value === "uat" || value === "sit")
+      onSetEnvironment(value);
   }
 
   return (
