@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { EnvironmentSelector } from "../components/EnvironmentSelector";
-import { CollectionSearch } from "../components/CollectionSearch";
+import { CollectionSearchForm } from "./CollectionSearchForm";
 import { CollectionSearchResults } from "../components/CollectionSearchResults";
 import { Tabs } from "../components/Tabs";
 import { CollectionDetails } from "../components/CollectionDetails";
@@ -30,7 +30,7 @@ export function App({ environment }: { environment: Environment }) {
         <EnvironmentSelector environment={environment} />
       </header>
       <h3>Search Collections</h3>
-      <CollectionSearch
+      <CollectionSearchForm
         baseUrl={baseUrl}
         onSearchResults={handleCollectionSearchResults}
         token={edlToken}
@@ -65,6 +65,10 @@ export function App({ environment }: { environment: Environment }) {
         header {
           display: flex;
           align-items: center;
+        }
+
+        h1 {
+          margin-right: 2rem;
         }
       `}</style>
     </div>

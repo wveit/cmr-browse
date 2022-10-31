@@ -8,7 +8,7 @@ interface CollectionSearchProps {
   onSearchResults: (collections: Collection[]) => void;
   token: string;
 }
-export function CollectionSearch({
+export function CollectionSearchForm({
   baseUrl,
   onSearchResults,
   token,
