@@ -29,7 +29,6 @@ export function App({ environment }: { environment: Environment }) {
         <h1>CMR Browse</h1>
         <EnvironmentSelector environment={environment} />
       </header>
-      <h3>Search Collections</h3>
       <CollectionSearchForm
         baseUrl={baseUrl}
         onSearchResults={handleCollectionSearchResults}
