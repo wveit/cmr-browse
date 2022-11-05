@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll",
+    "copy-vars": "ts-node --esm scripts/copy-vars.ts",
+    "typecheck": "tsc --watch"
   },
   "dependencies": {
     "axios": "^0.26.1",
