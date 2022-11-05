@@ -9,6 +9,7 @@ import { VariablesUmm } from "../components/VariablesUmm";
 import { Granules } from "../components/Granules";
 import { Environment } from "../types";
 import { Collection } from "../types/Collection";
+import { LoginControls } from "./LoginControls";
 
 export function App({ environment }: { environment: Environment }) {
   const [edlToken, setEdlToken] = useState("");
@@ -28,6 +29,11 @@ export function App({ environment }: { environment: Environment }) {
       <header>
         <h1>CMR Browse</h1>
         <EnvironmentSelector environment={environment} />
+        <LoginControls
+          token={edlToken}
+          onSetToken={setEdlToken}
+          environment={environment}
+        />
       </header>
       <CollectionSearchForm
         baseUrl={baseUrl}
@@ -68,6 +74,10 @@ export function App({ environment }: { environment: Environment }) {
 
         h1 {
           margin-right: 2rem;
+        }
+
+        :global(.LoginControls) {
+          margin-left: auto;
         }
       `}</style>
     </div>
