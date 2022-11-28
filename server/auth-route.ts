@@ -1,20 +1,28 @@
+import express from "express";
 import axios, { AxiosError } from "axios";
-import type { NextApiRequest, NextApiResponse } from "next";
-import config from "../../../../.env.json";
-import {
-  edlBaseUrl,
-  ensureEnvironmentString,
-  queryString,
-} from "../../../../util/util";
 
-export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
-  const env = ensureEnvironmentString(req.query.env);
+const router = express.Router();
+
+import config from "../.env.json";
+import { edlBaseUrl, ensureEnvironmentString, queryString } from "../util/util";
+
+router.get("/:env/auth/authorize", (req, res) => {
+  const env = ensureEnvironmentString(req.params.env);
+  const clientId = config["environment"][env].edlClientId;
+  const redirectUri = req.query.redirect_uri || "waka";
+
+  let url = edlBaseUrl(env);
+  url += `/oauth/authorize?response_type=code`;
+  url += `&client_id=${clientId}`;
+  url += `&redirect_uri=${redirectUri}`;
+
+  res.redirect(url);
+});
+
+router.post("/:env/auth/token", async (req, res) => {
+  const env = ensureEnvironmentString(req.params.env);
   const clientId = config["environment"][env].edlClientId;
   const clientPassword = config["environment"][env].edlClientPassword;
-
   const redirect_uri = req.body.redirectUri;
   const code = req.body.code;
   const grant_type = "authorization_code";
@@ -39,8 +47,10 @@ export default async function handler(
   console.log(edlResponse?.status, edlResponse?.statusText, edlResponse?.data);
 
   res.json({ tokenData: edlResponse?.data });
-}
+});
 
 function combine(id: string, password: string): string {
   return btoa(`${id}:${password}`);
 }
+
+export default router;
