@@ -67,5 +67,5 @@ function login(env: Environment, code: string, redirectUri: string) {
     redirectUri,
   };
   console.log("sending ", body);
-  return axios({ method: "post", url, data: JSON.stringify(body) });
+  return axios({ method: "post", url, data: body });
 }
